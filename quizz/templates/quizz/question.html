@@ -1,0 +1,22 @@
+{% if question_list %}
+    <ul>
+    {% for question in question_list %}
+        <li>{{ question.question_text }}</li>
+
+        {% if question.choice_text_1 %}
+        <ul>            
+                <li>{{ question.choice_text_1 }}</a></li>
+                <li>{{ question.choice_text_2 }}</a></li>
+                <li>{{ question.choice_text_3 }}</a></li>
+                <li>{{ question.choice_text_4 }}</a></li>
+
+        </ul>
+        {% else %}
+            <p>No choices are available.</p>
+        {% endif %}
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No quizz are available.</p>
+{% endif %}

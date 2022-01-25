@@ -1,0 +1,33 @@
+<p>yo</p>
+
+{% block content %}
+<p class="container text-center">
+<br>
+<br>
+<br>
+Bienvenue dans ce quizz de culture générale. 
+<br>
+Une questions, quatres propositions et une seule bonne réponse. Vous pouvez vous concerter si vous êtes à plusieurs ou bien vous concerter vous-même si vous êtes seul ! 
+<br>
+1 point est attribué par bonne réponse
+
+
+Les différentes catégories des quizzs.
+<br>
+
+
+<button><a class="btn btn-primary" href="{% url 'quizz:loginuser' %}"><p>Log in</p></a></button>
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<li><a href="{% url 'quizz:theme' %}"></a></li>
+
+</p>
+{% endblock %}        

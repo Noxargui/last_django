@@ -1,0 +1,14 @@
+<form method="post"  role="form" action="/">
+    {% csrf_token %}
+    <ul>
+    <input type="text" name="username" placeholder="Utilisateur">
+    <input type="password" name="password" placeholder="Mot de passe">
+    
+    <button><a type="submit" class="btn btn-primary" href={{ link }}>Log in 2</a></button>
+    </ul>
+    <ul>
+    <input type="text" name="new_username" placeholder="Utilisateur">
+    <input type="password" name="new_password" placeholder="Mot de passe">
+    <input type="submit" value="Create user" />
+    </ul>
+    <p>{{ username }}</p>
