@@ -1,3 +1,4 @@
+from random import choice
 from django.http import HttpResponse
 # from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
@@ -20,17 +21,52 @@ def theme(request):
     return render(request, 'quizz/theme.html', context)
 
 def question(request, theme_id):
+
     question_list = Question.objects.filter(theme=theme_id)
     context = {
-        'theme': theme,
+        'theme_id': theme_id,
         'question_list': question_list,
     }
     if request.method == 'GET':
         return render(request, 'quizz/question.html', context)
     if request.method == 'POST':
-        choice = request.POST.get('choice')
-        print(choice)
-        return render(request, 'quizz/theme.html', context)
+        # Selectionner tous les choix et les mettre en déselectionné
+        nb_question = len(Question.objects.filter(theme=theme_id))
+        for choice in Choice.objects.filter(theme=theme_id):
+            choice.selected = False
+            choice.save()
+
+        score = 0
+
+        # Liste de tous les choix sélectionnés
+        list_selected_choice = []
+        for question_id in range(1,nb_question+1):
+            if request.POST.get(f'choice_id{question_id}'):
+                list_selected_choice.append(request.POST.get(f'choice_id{question_id}'))
+        
+        for choice_id in list_selected_choice:
+            choice_selected = Choice.objects.get(pk=choice_id)
+            choice_selected.selected = True
+            choice_selected.save()
+
+        context["choice_selected"]=choice_selected
+        
+        for choice in Choice.objects.filter(theme=theme_id):
+            if choice.selected == True and choice.votes == True:
+                score += 1
+        score = str(score) + "/" + str(nb_question)
+        context["score"]=score
+
+        return render(request, 'quizz/results.html', context)
+
+def results(request, theme_id):
+    question_list = Question.objects.filter(theme=theme_id)
+    context = {
+        'question_list': question_list,
+        'theme_id': theme_id
+    }
+
+    return render(request, 'quizz/results.html', context)
 
 #def choice(request, question_id):
 #    #question_list = Question.objects.filter(theme=theme_id)
@@ -73,5 +109,8 @@ def loginuser(request):
                 return redirect('/quizz/theme')
         else:
             return render(request, 'quizz/loginuser.html', {"error": "Cet utilisateur n'éxiste pas"}) 
+
+def score(request):
+    return render(request, 'quizz/score.html')
 
     

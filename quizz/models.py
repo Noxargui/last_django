@@ -22,6 +22,7 @@ class Choice(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    votes = models.BooleanField(default=False)
+    selected = models.BooleanField(default=False)
     def __str__(self):
         return self.choice_text

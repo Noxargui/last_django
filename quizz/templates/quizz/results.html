@@ -1,0 +1,33 @@
+<h1>Resultats</h1>
+{% for question in question_list %}
+
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    
+        {% for choice in question.choice_set.all %}
+           
+            {% if choice.votes %}
+            <fieldset style="float: left; width: 280px; background-color:green;">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
+            </fieldset>
+
+            {% elif choice.selected %}
+            <fieldset style="float: left; width: 280px; background-color:red;">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
+            </fieldset>
+            {% else %}
+            <fieldset style="float: left; width: 280px;">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
+            </fieldset>
+            {% endif %}
+            <br>
+            <br>
+            <br>
+
+
+        {% endfor %}
+        
+
+{% endfor %}
+{% if score %}
+<p>Tu as un score de {{ score }}</p>
+{% endif %}

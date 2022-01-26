@@ -10,5 +10,7 @@ urlpatterns = [
     path('<int:theme_id>', views.question, name='question'),
     path('loginuser', views.loginuser, name='loginuser'),
     path('newuser', views.newuser, name='newuser'),   
-    path('question', views.question, name='question')
+    path('question', views.question, name='question'),
+    path('results', views.results, name='results'),
+    path('score', views.score, name='score')
 ]
