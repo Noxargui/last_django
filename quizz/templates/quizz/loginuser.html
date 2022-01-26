@@ -1,14 +1,15 @@
-<form method="post"  role="form" action="/">
+<form method="post"  role="form" action="/quizz/loginuser">
     {% csrf_token %}
     <ul>
     <input type="text" name="username" placeholder="Utilisateur">
     <input type="password" name="password" placeholder="Mot de passe">
-    
-    <button><a type="submit" class="btn btn-primary" href={{ link }}>Log in 2</a></button>
+    <input type="submit" value="Log in" />
     </ul>
     <ul>
-    <input type="text" name="new_username" placeholder="Utilisateur">
-    <input type="password" name="new_password" placeholder="Mot de passe">
-    <input type="submit" value="Create user" />
+    {{ error }}
     </ul>
-    <p>{{ username }}</p>
+</form>
+
+<a href="/quizz/newuser">
+    <button>Créer utilisateur</button>
+</a>

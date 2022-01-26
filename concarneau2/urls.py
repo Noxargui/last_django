@@ -19,15 +19,6 @@ from quizz import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('theme/', views.theme, name='theme'),
-    #path('/loginview', views.LoginView.as_view(), name='LoginView'),
     path('admin/', admin.site.urls),
-    path('quizz/admin/', admin.site.urls),
     path('quizz/', include('quizz.urls')),
 ]
-
-#path('', views.LoginView.as_view(), name='LoginView'),
-#    path('logout', views.LogoutView.as_view(), name='LoginView'),
-#    path('theme', views.theme, name='theme'),
-#    path('<int:theme_id>', views.question, name='question'),
-#

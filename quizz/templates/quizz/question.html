@@ -1,22 +1,20 @@
 {% if question_list %}
-    <ul>
-    {% for question in question_list %}
-        <li>{{ question.question_text }}</li>
 
-        {% if question.choice_text_1 %}
-        <ul>            
-                <li>{{ question.choice_text_1 }}</a></li>
-                <li>{{ question.choice_text_2 }}</a></li>
-                <li>{{ question.choice_text_3 }}</a></li>
-                <li>{{ question.choice_text_4 }}</a></li>
+<ul>
+{% for question in question_list %}
+{% csrf_token %}
 
-        </ul>
-        {% else %}
-            <p>No choices are available.</p>
-        {% endif %}
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+{% endfor %}
+</ul>
 
-    {% endfor %}
-    </ul>
+<input type="submit" value="Vote">
+</form>
 {% else %}
-    <p>No quizz are available.</p>
+<p>No quizz are available.</p>
 {% endif %}

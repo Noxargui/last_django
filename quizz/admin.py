@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Theme, Question#, Choice
+from .models import Theme, Question, Choice
 
-#class ChoiceInline(admin.TabularInline):
-#    model = Choice
-#    extra = 4
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 4
 
 class QuestionInline(admin.StackedInline):
     model = Question
@@ -17,14 +17,14 @@ class ThemeAdmin(admin.ModelAdmin):
     # ]
     inlines = [QuestionInline]
     
-#class QuestionAdmin(admin.ModelAdmin):
-     #fieldsets = [
-      #   (None,               {'fields': ['question']}),
+class QuestionAdmin(admin.ModelAdmin):
+    # fieldsets = [
+    #     (None,               {'fields': ['question_text']}),
     #     #('Date information', {'fields': ['pub_date']}),
-     #]
-    #inlines = [QuestionInline]
+    # ]
+    inlines = [ChoiceInline]
     
 
-admin.site.register(Theme, ThemeAdmin)
-admin.site.register(Question)#, QuestionAdmin)
-#admin.site.register(Choice)
+admin.site.register(Theme)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
