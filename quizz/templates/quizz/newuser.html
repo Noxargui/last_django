@@ -12,9 +12,12 @@
 <body>
     <form method="post"  role="form" action="/quizz/newuser">
         {% csrf_token %}
-        <input type="text" name="new_username" placeholder="utilisateur">
+        <br><br><br><br><br>
+        <CENTER><input type="text" name="new_username" placeholder="utilisateur">
+            <br><br>
         <input type="password" name="new_password" placeholder="mot de passe">
-        <input type="submit" value="créer utilisateur">
+        <br><br>
+        <input type="submit" value="créer utilisateur"></CENTER>
     </form>
     {% if error %} 
     {{ error }} 

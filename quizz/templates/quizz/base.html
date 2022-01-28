@@ -10,6 +10,7 @@
 </head>
 <body>
 <!-- As a heading -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'quizz:home' %}">Accueil</a>
@@ -29,6 +30,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'quizz:loginuser' %}">Log Out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" >Bonchour {{ request.user.username }}</a>
           </li>
       </ul>
     </div>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Theme, Question, Choice
+from .models import New_Question, Theme, Question, Choice, Comment, Score
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
@@ -27,4 +27,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Theme)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Comment) 
+admin.site.register(New_Question) 
+admin.site.register(Score) 
 #admin.site.register(Choice)

@@ -1,7 +1,16 @@
 {% extends 'quizz/base.html' %}
 {% block content %}
 
+{% if authenticated %}
 <h1>Score</h1>
-{{ score }}
+
+{% for key, values in score_by_theme.items %}
+    {{key}}
+    {% for value in values %}
+        {{value}}
+    {% endfor %} <br>   
+{% endfor %}
+
+{% endif %}
 
 {% endblock  %}

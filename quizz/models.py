@@ -28,7 +28,19 @@ class Choice(models.Model):
         return self.choice_text
 
 class Comment(models.Model):
-    remark = models.CharField(max_length=200)
+    comment = models.CharField(max_length=200)
+    def __str__(self):
+        return self.comment
+
+class New_Question(models.Model):
     question = models.CharField(max_length=200)
     def __str__(self):
-        return self.remark
+        return self.question
+        
+
+class Score(models.Model):
+    user = models.CharField(max_length=200)
+    theme= models.CharField(max_length=200)
+    score= models.CharField(max_length=200)
+    def __str__(self):
+        return self.score

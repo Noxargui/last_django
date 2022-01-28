@@ -3,10 +3,9 @@
 <CENTER><h1>Bienvenue au Super Quizz de la mort qui tue !!! </h1></CENTER>
 {% load static %}
 
-<CENTER><img src='quizz/grumpy.jpg'></CENTER>
-<br><br><br><br><br><br><br><br><br><br><br>
+<CENTER><img src='/static/images/grumpy.jpg'></CENTER>
+<br><br><br><br><br><br><br><br><br>
 <CENTER><h3>Connectez-vous pour commencer à jouer ;)</h3></CENTER>
 
-<CENTER><button><a class="btn btn-primary" href="{% url 'quizz:loginuser' %}"><p>Log in</p></a></button></CENTER>
-
+<CENTER><button><a class="btn btn-warning" href="{% url 'quizz:loginuser' %}"><p>Log in</p></a></button></CENTER>
 

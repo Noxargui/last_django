@@ -1,8 +1,9 @@
+from collections import UserList
 from random import choice
 from django.http import HttpResponse
 # from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Theme, Question, Choice, Comment
+from .models import Theme, Question, Choice, Comment, New_Question, Score 
 from django.http import Http404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -12,9 +13,11 @@ from django.contrib.auth.models import User
 
 
 def theme(request):
-    latest_theme_list = Theme.objects.order_by('id')[:5]
+
+    latest_theme_list = Theme.objects.order_by('id')
     # template = loader.get_template('quizz/index.html')
     context = {
+        'authenticated':authenticated,
         'latest_theme_list': latest_theme_list,
     }
     # return HttpResponse(template.render(context, request))
@@ -26,8 +29,10 @@ def question(request, theme_id):
     context = {
         'theme_id': theme_id,
         'question_list': question_list,
+        'authenticated':authenticated,
     }
     if request.method == 'GET':
+
         return render(request, 'quizz/question.html', context)
     if request.method == 'POST':
         # Selectionner tous les choix et les mettre en déselectionné
@@ -56,6 +61,10 @@ def question(request, theme_id):
                 score += 1
         score = str(score) + "/" + str(nb_question)
         context["score"]=score
+        theme_text= Theme.objects.get(pk=theme_id)
+        theme_text=theme_text.theme_text 
+        score= Score.objects.create(theme=theme_text, score=score, user=username)
+        score.save()
 
         return render(request, 'quizz/results.html', context)
 
@@ -78,7 +87,8 @@ def results(request, theme_id):
 #    return render(request, 'quizz/choice.html', context)
 
 def home(request):
-	return render(request, 'quizz/home.html')
+    return render(request, 'quizz/home.html')
+
 
 
 from django.contrib.auth import authenticate, login
@@ -99,35 +109,72 @@ def newuser(request):
         return redirect('/quizz/loginuser')
 
 def loginuser(request):
+    global authenticated
+    authenticated = False
+    global user
+    try:
+        logout(request)
+    except: 
+        pass
+    user = authenticate(username="username00000000000", password="password")
+
     if request.method == "GET":
         return render(request, 'quizz/loginuser.html')
     if request.method == "POST":
+        global username
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+        
+        
+        authenticated = user is not None
 
         if user is not None:
             if user.is_superuser:
-                return redirect('/admin')  
+                login(request, user)
+                return redirect('/admin') 
             else:
+                login(request, user)
                 return redirect('/quizz/theme')
+                #return render(request, 'quizz/theme.html', {"user": user is not None}) 
         else:
-            return render(request, 'quizz/loginuser.html', {"error": "Cet utilisateur n'éxiste pas"}) 
+            try:
+                user_try=User.objects.filter(username=username).values()[0]["username"]
+                return render(request, 'quizz/loginuser.html', {"error": "Le mot de passe est incorrect."}) 
+            except:
+                return render(request, 'quizz/loginuser.html', {"error": "Cet utilisateur n'éxiste pas."})
+
 
 def score(request):
-    return render(request, 'quizz/score.html')
+    try:
+        score_list = Score.objects.all().filter(user=username)
+    except:
+        return render(request, 'quizz/erreur.html')
+    theme_list = Theme.objects.order_by('id')
+    #score_by_theme=[]
+    score_by_theme = {}
+    for theme in theme_list: 
+        score_by_theme[theme]=score_list.filter(theme=theme.theme_text)
+        #score_by_theme.append(score_list.filter(theme=theme.theme_text))
+
+    context={"score_list":score_list, "score_by_theme":score_by_theme,'authenticated':authenticated}
+    return render(request, 'quizz/score.html', context)
 
 def contact(request):
     if request.method == "GET":
         return render(request, 'quizz/contact.html')
     if request.method == "POST":
-        remark = request.POST.get('remark')
+        comment = request.POST.get('comment')
         question = request.POST.get('question')
         #Comment.choice_set.create(remark=remark)
         #Comment.remark = remark
         #Comment.save()
+        comment = Comment.objects.create(comment=comment)
+        comment.save()
+        question = New_Question.objects.create(question=question)
+        question.save()
 
-        if remark != "" or question !="":
+        if comment != "" or question !="":
             context={"message": "Vos requêtes ont bien été transmises à l'administration!"}
         else: 
             context={"message": "Veuillez renseigner un des champs."}
