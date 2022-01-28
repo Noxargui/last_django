@@ -1,3 +1,5 @@
+{% extends 'quizz/base.html' %}
+{% block content %}
 {% if latest_theme_list %}
     <ul>
     {% for theme in latest_theme_list %}
@@ -5,7 +7,8 @@
         <button><a class="btn btn-primary" href="{% url 'quizz:score' %}"><p>Score</p></a></button>
     {% endfor %}
     </ul>
-    <button><a class="btn btn-primary" href="{% url 'quizz:loginuser' %}"><p>Log Out</p></a></button>
 {% else %}
     <p>No quizz are available.</p>
 {% endif %}
+
+{% endblock  %}

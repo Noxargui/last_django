@@ -1,15 +1,28 @@
+{% extends 'quizz/base0.html' %}
+{% block content %}
 <form method="post"  role="form" action="/quizz/loginuser">
     {% csrf_token %}
     <ul>
-    <input type="text" name="username" placeholder="Utilisateur">
-    <input type="password" name="password" placeholder="Mot de passe">
+        <CENTER><h1>Registration</h1></CENTER>
+        <br><br><br><br>
+    <CENTER>
+    <input type="text" name="username" placeholder="Utilisateur"><br><br>
+    <input type="password" name="password" placeholder="Mot de passe"><br><br>
     <input type="submit" value="Log in" />
+    </CENTER>
     </ul>
     <ul>
-    {{ error }}
+    <CENTER>
+    <p>{{ error }}</p>
+    </CENTER>
     </ul>
 </form>
-
+<CENTER>
+    <ul>
 <a href="/quizz/newuser">
     <button>Créer utilisateur</button>
 </a>
+</CENTER>
+
+
+{% endblock  %}

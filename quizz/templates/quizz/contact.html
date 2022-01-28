@@ -1,0 +1,21 @@
+{% extends 'quizz/base.html' %}
+{% block content %}
+
+<CENTER><h3>Envoyer vos commentaires ou de nouvelles Questions!</h3></CENTER>
+<br><br><br><br><br><br><br>
+<form method="post"  role="form" action="/quizz/contact">
+    {% csrf_token %}
+    <CENTER><input type="text" name="remark" placeholder="comment">
+    <br><br><br>
+    <input type="text" name="question" placeholder="question">
+    <br><br><br>
+    <input type="submit" value="Submit"></CENTER>
+</form>
+<br>
+{% if message %}
+<CENTER>{{ message }}</CENTER>
+{% endif %}
+
+
+
+{% endblock  %}

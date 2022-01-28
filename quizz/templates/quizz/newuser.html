@@ -1,3 +1,6 @@
+{% extends 'quizz/base0.html' %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,5 +16,10 @@
         <input type="password" name="new_password" placeholder="mot de passe">
         <input type="submit" value="créer utilisateur">
     </form>
+    {% if error %} 
+    {{ error }} 
+    {% endif %}
 </body>
 </html>
+
+{% endblock  %}

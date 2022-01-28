@@ -2,7 +2,7 @@ from random import choice
 from django.http import HttpResponse
 # from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Theme, Question, Choice
+from .models import Theme, Question, Choice, Comment
 from django.http import Http404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -90,8 +90,12 @@ def newuser(request):
     if request.method == 'POST':
         new_username = request.POST.get('new_username')
         new_password = request.POST.get('new_password')
-        user = User.objects.create_user(new_username, '', new_password)
-        user.save()
+        user = authenticate(username=new_username, password=new_password)
+        if user is None:
+            user = User.objects.create_user(new_username, '', new_password)
+            user.save()
+        else :
+            return render(request, 'quizz/newuser.html', {"error": "L'utilisateur existe déjà."})
         return redirect('/quizz/loginuser')
 
 def loginuser(request):
@@ -113,4 +117,19 @@ def loginuser(request):
 def score(request):
     return render(request, 'quizz/score.html')
 
+def contact(request):
+    if request.method == "GET":
+        return render(request, 'quizz/contact.html')
+    if request.method == "POST":
+        remark = request.POST.get('remark')
+        question = request.POST.get('question')
+        #Comment.choice_set.create(remark=remark)
+        #Comment.remark = remark
+        #Comment.save()
+
+        if remark != "" or question !="":
+            context={"message": "Vos requêtes ont bien été transmises à l'administration!"}
+        else: 
+            context={"message": "Veuillez renseigner un des champs."}
+        return render(request, 'quizz/contact.html', context) 
     

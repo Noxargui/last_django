@@ -1,3 +1,6 @@
+{% extends 'quizz/base.html' %}
+{% block content %}
+
 {% if choice_list %}
     <ul>
     {% for choice in choice_list %}
@@ -7,3 +10,5 @@
 {% else %}
     <p>No quizz are available.</p>
 {% endif %}
+
+{% endblock  %}

@@ -1,3 +1,7 @@
+{% extends 'quizz/base.html' %}
+{% block content %}
+
+<CENTER>
 {% if question_list %}
 
 <form action="{% url 'quizz:question' theme_id %}" method="post">
@@ -5,12 +9,13 @@
 {% for question in question_list %}
 {% csrf_token %}
 
-    <legend><h1>{{ question.question_text }}</h1></legend>
+    <legend><h3>{{ question.question_text }}</h3></legend>
         {% with count_question=forloop.counter %}
         
         {% for choice in question.choice_set.all %}
-        <br>
+        
             <input type="checkbox" name="choice_id{{count_question}}" value="{{ choice.id }}">{{ choice.choice_text }}
+            <br><br>
         {% endfor %}
         {% endwith %}
 {% endfor %}
@@ -22,3 +27,7 @@
 {% else %}
 <p>No quizz are available.</p>
 {% endif %}
+
+</CENTER>
+
+{% endblock  %}

@@ -26,3 +26,9 @@ class Choice(models.Model):
     selected = models.BooleanField(default=False)
     def __str__(self):
         return self.choice_text
+
+class Comment(models.Model):
+    remark = models.CharField(max_length=200)
+    question = models.CharField(max_length=200)
+    def __str__(self):
+        return self.remark

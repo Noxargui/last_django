@@ -1,33 +1,33 @@
+{% extends 'quizz/base.html' %}
+{% block content %}
+<center>
 <h1>Resultats</h1>
+<br>
 {% for question in question_list %}
-
-    <legend><h1>{{ question.question_text }}</h1></legend>
-    
+<br>
+    <legend><h3>{{ question.question_text }}</h3></legend>
+    <br><br>
         {% for choice in question.choice_set.all %}
            
             {% if choice.votes %}
-            <fieldset style="float: left; width: 280px; background-color:green;">
+            <fieldset style="width: 200px; background-color:green;">
                 <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
-            </fieldset>
-
+            </fieldset><br><br>
             {% elif choice.selected %}
-            <fieldset style="float: left; width: 280px; background-color:red;">
+            <fieldset style="width: 200px; background-color:red;">
                 <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
-            </fieldset>
+            </fieldset><br><br>
             {% else %}
-            <fieldset style="float: left; width: 280px;">
+            <fieldset style="width: 200px;">
                 <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
-            </fieldset>
+            </fieldset><br><br>
             {% endif %}
-            <br>
-            <br>
-            <br>
-
-
         {% endfor %}
         
 
 {% endfor %}
 {% if score %}
-<p>Tu as un score de {{ score }}</p>
+<h5>Tu as un score de {{ score }}</h5>
 {% endif %}
+</center>
+{% endblock  %}
