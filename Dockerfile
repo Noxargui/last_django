@@ -1,7 +1,7 @@
 FROM alpine
 
 RUN apt-get update \
-    && apt-get install -y python3-pip python3 libmariadb-dev\
+    && apt-get install -y python3-pip python3 libmariadb-dev
         
 COPY . /
 RUN pip install -r requirements.txt
