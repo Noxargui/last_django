@@ -1,4 +1,4 @@
-FROM alpine
+FROM nginx
 
 RUN apt-get update \
     && apt-get install -y python3-pip python3 libmariadb-dev
